@@ -1,6 +1,10 @@
+import RouteSwitch from "./RouteSwitch";
+
 function App() {
   return (
-    <div>App</div>
+    <div>
+      <RouteSwitch />
+    </div>
   );
 }
 
