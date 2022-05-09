@@ -1,0 +1,38 @@
+.navbar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 3rem;
+    height: 100%;
+    background-color: var(--app-bg-light);
+}
+
+.navbar__up{
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar__down{
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.navbar__up-icon, .navbar__down-icon{
+    color: var(--app-green);
+    margin-block: 1rem;
+    gap: 2rem;
+    font-size: 2rem;
+    filter: grayscale(1);
+    -webkit-filter: grayscale(1);
+    transition: ease-in-out 0.2s;
+    cursor: pointer;
+}
+
+.navbar__up-icon:hover, .navbar__down-icon:hover{
+    filter: grayscale(0);
+    -webkit-filter: grayscale(0);
+}

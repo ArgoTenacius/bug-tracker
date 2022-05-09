@@ -10,3 +10,7 @@
     --app-green: rgba(97,255,53,0.6);
     --app-white: rgba(255, 255, 255, 0.842);
 }
+
+.app{
+    margin-left: 3rem;
+}
