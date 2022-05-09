@@ -37,7 +37,7 @@ const Projects = ({user}) => {
         <hr />
         {
             project.map((index) => (
-                projectCard(index.Project.name, index.id)
+                index.Project.users.includes(user.email) === true && projectCard(index.Project.name, index.id)
             ))
         }
     </main>
