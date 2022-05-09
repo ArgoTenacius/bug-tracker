@@ -1,21 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { db } from '../../firebase/config';
-import { collection, doc, getDocs } from 'firebase/firestore'
+import { collection, getDoc, getDocs } from 'firebase/firestore'
 import { ImExit } from 'react-icons/im'
 import { AiOutlinePlus } from 'react-icons/ai'
 import './projects.css';
 
-const Projects = () => {
+const Projects = ({user}) => {
+  const [project, setProject] = useState([]);
   const appProjects = collection(db, "projects"); 
 
-  const getProjects = async () => {
-      const dataProjects = await getDocs(appProjects)
-      console.log(dataProjects.docs.map((doc) => ({...doc.data(), id: doc.id})))
+  const renderProjects = async () => {
+    //get the data from firebase
+    const dataProjects = await getDocs(appProjects);
+    const projects = dataProjects.docs.map((doc) => ({...doc.data(), id: doc.id}));
+
+    setProject(projects);
   }
 
   useEffect(() => {
-    getProjects()
+    renderProjects();
   }, [])
+
+  const projectCard = (name, key) => (
+    <section key={key} className='project__card'>
+        <h1 className='project__card-name'>{name}</h1>
+        <ImExit className='project__card-icon'/>
+    </section>
+  )
 
   return (
     <main className='project'>
@@ -24,12 +35,13 @@ const Projects = () => {
             <AiOutlinePlus className='project__header-icon'/>
         </header>
         <hr />
-        <section className='project__card'>
-            <h1 className='project__card-name'>John Doe Project</h1>
-            <ImExit className='project__card-icon'/>
-        </section>
+        {
+            project.map((index) => (
+                projectCard(index.Project.name, index.id)
+            ))
+        }
     </main>
   )
 }
 
-export default Projects
+export default Projects;

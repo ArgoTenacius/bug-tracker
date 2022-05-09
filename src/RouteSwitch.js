@@ -13,7 +13,7 @@ const RouteSwitch = ({user, setUser}) => {
   return (
     <Routes>
       <Route path="/login" element={<Auth setUser={setUser}/>}/>
-      <Route path="/home" element={<Projects />}/>
+      <Route path="/home" element={<Projects user={user}/>}/>
     </Routes>
   )
 }
