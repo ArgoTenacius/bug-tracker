@@ -1,0 +1,12 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --app-bg: rgb(26, 26, 26);
+    --app-bg-light: rgb(41, 41, 41);
+    --app-green: rgba(97,255,53,0.6);
+    --app-white: rgba(255, 255, 255, 0.842);
+}
