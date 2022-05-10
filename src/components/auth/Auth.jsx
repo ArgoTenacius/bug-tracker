@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import React, { useState, useRef } from 'react';
 import { useNavigate } from "react-router";
+import routes from "../../constants/routes.json"
 import { auth } from '../../firebase/config';
 import './auth.css';
 
@@ -29,7 +30,7 @@ const Auth = () => {
     try {
       const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
       console.log(user);
-      navigate('/home');
+      navigate(routes.PROJECT);
     } catch (error) {
       authError(error.message);
       console.log(error.message);
@@ -40,7 +41,7 @@ const Auth = () => {
     try {
       const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
       console.log(user);
-      navigate('/home');
+      navigate(routes.PROJECT);
     } catch (error) {
       authError(error.message);
       console.log(error.message);
@@ -67,7 +68,7 @@ const Auth = () => {
             <span onClick={changeAuthType}>Already have an account ? Login in</span>
           </>
         }
-        <h4 ref={errorText} className="auth__section-error"> ERROR </h4>
+        <h4 ref={errorText} className="auth__section-error"></h4>
       </section>
     </main>
   )
