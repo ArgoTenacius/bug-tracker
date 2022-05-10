@@ -4,15 +4,20 @@ import { useNavigate } from "react-router";
 import { auth } from '../../firebase/config';
 import './auth.css';
 
-const Auth = ({setUser}) => {
+const Auth = () => {
   const emailInput = useRef();
   const passwordInput = useRef();
+  const errorText = useRef();
   const navigate = useNavigate();
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [onLogin, setOnLogin] = useState(false);
+
+  const authError = (message) => {
+    errorText.current.innerText = message
+  }
 
   const changeAuthType = () => {
     emailInput.current.value = "";
@@ -26,6 +31,7 @@ const Auth = ({setUser}) => {
       console.log(user);
       navigate('/home');
     } catch (error) {
+      authError(error.message);
       console.log(error.message);
     }
   };
@@ -36,6 +42,7 @@ const Auth = ({setUser}) => {
       console.log(user);
       navigate('/home');
     } catch (error) {
+      authError(error.message);
       console.log(error.message);
     }
   };
@@ -60,6 +67,7 @@ const Auth = ({setUser}) => {
             <span onClick={changeAuthType}>Already have an account ? Login in</span>
           </>
         }
+        <h4 ref={errorText} className="auth__section-error"> ERROR </h4>
       </section>
     </main>
   )
