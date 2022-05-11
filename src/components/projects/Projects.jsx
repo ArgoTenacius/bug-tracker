@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../firebase/config';
-import { collection, getDoc, getDocs } from 'firebase/firestore'
+import { collection, getDocs } from 'firebase/firestore'
+import { useNavigate } from 'react-router';
 import { ImExit } from 'react-icons/im'
 import { AiOutlinePlus } from 'react-icons/ai'
+import routes from '../../constants/routes.json'
 import './projects.css';
 
-const Projects = ({user}) => {
+const Projects = ({user, setProjectData}) => {
+  const navigate = useNavigate();
   const [project, setProject] = useState([]);
   const appProjects = collection(db, "projects"); 
 
@@ -17,13 +20,18 @@ const Projects = ({user}) => {
     setProject(projects);
   }
 
+  const enterProject = (data) => {
+    setProjectData(data);
+    navigate(routes.BUGPAGE);
+  }
+
   useEffect(() => {
     renderProjects();
   }, [])
 
-  const projectCard = (name, key) => (
+  const projectCard = (name, key, project) => (
     <section key={key} className='project__card'>
-        <h1 className='project__card-name'>{name}</h1>
+        <h1 className='project__card-name' onClick={() => enterProject(project)}>{name}</h1>
         <ImExit className='project__card-icon'/>
     </section>
   )
@@ -37,7 +45,7 @@ const Projects = ({user}) => {
         <hr />
         {
             project.map((index) => (
-                index.Project.users.includes(user.email) === true && projectCard(index.Project.name, index.id)
+                index.Project.users.includes(user.email) === true && projectCard(index.Project.name, index.id, index)
             ))
         }
     </main>

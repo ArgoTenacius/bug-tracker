@@ -1,0 +1,65 @@
+.bugPage{
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--app-bg);
+    color: var(--app-white);
+    display: flex;
+    justify-content: space-between;
+    padding: 1%;
+}
+
+.bugPage__section{
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
+}
+
+.bugPage__section-header{
+    display: flex;
+    background-color: var(--app-bg-light);
+    padding-inline: 1%;
+    min-height: 2rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bugPage__section-card{
+    cursor: pointer;
+    width: 100%;
+    height: fit-content;
+    padding-inline: 1%;
+    background-color: var(--app-bg-light);
+    display: flex;
+    flex-direction: column;
+}
+
+.bugPage__section-card--date, .bugPage__section-card--user{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5%;
+}
+
+.bugPage__section-card--arrow{
+    display: flex;
+    justify-content: space-between;
+}
+
+.right {
+    justify-content: right;
+}
+
+.bugPage__section-card--arrow---icon, .bugPage__section-header--icon{
+    cursor: pointer;
+    font-size: 2rem;
+    color: var(--app-primary);
+    filter: grayscale(1);
+    opacity: 0.4;
+    transition: ease-in-out 0.2s;
+}
+
+.bugPage__section-card--arrow---icon:hover, .bugPage__section-header--icon:hover{
+    opacity: 1;
+    filter: grayscale(0);
+}

@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { Auth, BugPage, Projects } from './components';
 import routes from './constants/routes.json';
 
-const RouteSwitch = ({user, setUser, project, setProject}) => {
+const RouteSwitch = ({user, setUser, projectData, setProjectData}) => {
 
   const navigate = useNavigate();
 
@@ -14,8 +14,8 @@ const RouteSwitch = ({user, setUser, project, setProject}) => {
   return (
     <Routes>
       <Route path="/login" element={<Auth setUser={setUser}/>}/>
-      <Route path="/project" element={<Projects user={user} setProject={setProject}/>}/>
-      <Route path='/project/bugPage' element={<BugPage project={project}/>}/>
+      <Route path="/project" element={<Projects user={user} setProjectData={setProjectData}/>}/>
+      <Route path='/project/bugPage' element={<BugPage project={projectData}/>}/>
     </Routes>
   )
 }
