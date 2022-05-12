@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './bugPage.css'
 import { AiOutlinePlus, AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai';
+import NewCard from '../newCard/NewCard';
 
 const BugPage = ({project}) => {
-  const newBugs = project.Project.bugs.new.bugs;
-  //const wipBugs = project.Project.bugs.wip.bugs;
-  //const doneBugs = project.Project.bugs.done.bugs;
+  const [openNewCard, setOpenNewCard] = useState(false);
+
   const cardNew = (title, data, user, desc = '', id) => (
     <div key={id} className='bugPage__section-card'>
       <h1>{title}</h1>
@@ -67,12 +67,19 @@ const BugPage = ({project}) => {
     </div>
   )
 
+  const newBugs = project.Project.bugs.new.bugs;
+  //const wipBugs = project.Project.bugs.wip.bugs;
+  //const doneBugs = project.Project.bugs.done.bugs;
+
   return (
     <main className='bugPage'>
+      {
+        openNewCard && <NewCard />
+      }
       <section className='bugPage__section'>
         <header className='bugPage__section-header'>
           <h1>New</h1>
-          <AiOutlinePlus className='bugPage__section-header--icon'/>
+          <AiOutlinePlus className='bugPage__section-header--icon' onClick={() => setOpenNewCard(true)}/>
         </header>
         {
           newBugs.map((index, id) => (
