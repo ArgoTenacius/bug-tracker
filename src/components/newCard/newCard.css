@@ -1,0 +1,55 @@
+.newCard{
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.616);
+}
+
+.newCard__section{
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+    width: 40%;
+    height: 30%;
+    background-color: var(--app-bg-light);
+}
+
+.newCard__section input{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    color: var(--app-white-m);
+    padding: 1%;
+    font-size: 1.5rem;
+}
+
+.newCard__section textarea{
+    resize: none;
+    height: 100%;
+    background-color: transparent;
+    color: var(--app-white-m);
+    border: none;
+    border-bottom: 1px solid white;
+    padding: 1%;
+    font-size: 1.5rem;
+}
+
+.newCard__section textarea:focus, .newCard__section input:focus{
+    outline: none;
+}
+
+.newCard__section-icon{
+    position: relative;
+    cursor: pointer;
+    bottom: 0.80rem;
+    font-size: 2.5rem;
+    border-radius: 100%;
+    background-color: var(--app-secondary);
+}
