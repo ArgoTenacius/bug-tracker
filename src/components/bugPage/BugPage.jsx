@@ -2,18 +2,13 @@ import React, { useEffect, useState } from 'react'
 import './bugPage.css'
 import { AiOutlinePlus, AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai';
 import NewCard from '../newCard/NewCard';
-import { addDoc, collection, getDocs, setDoc, doc } from 'firebase/firestore';
+import { addDoc, collection, getDocs, setDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 
 const BugPage = ({project}) => {
   const [openNewCard, setOpenNewCard] = useState(false);
-  const [newBugs, setNewBugs] = useState([]);
-  const projectRef = collection(db, "projects");
-
-  const getNewBugs = async () => {
-    const data = await getDocs(projectRef);
-    setNewBugs(data.docs.map((doc) => ({...doc.data().bugs.new})));
-  }
+  const [newBugs, setNewBugs] = useState(project.bugs.new);
+  const projectRef = collection(db, "projects"); 
 
   const newBug = (title, date, user, desc, id) => (
     <div key={id} className='bugPage__section-card'>
@@ -33,29 +28,31 @@ const BugPage = ({project}) => {
     </div>
   )
 
+  const updateNewBug = async () => {
+    //get the data from firebase
+    const dataProjects = await getDocs(projectRef);
+    const projects = dataProjects.docs.map((doc) => ({...doc.data(), id: doc.id}));
+
+    setNewBugs(projects[0].bugs.new);
+  }
+
   const addNewBug = async (title, date, user, desc) => {
     await setDoc(doc(db, 'projects', 'JyHt9xzH7WxIzN2qbo5h'), {
       bugs: {
-        new: [
-          {
+        new: arrayUnion({
             title: title,
             description: desc,
             postedBy: date,
             user: user
-          }
-        ]
+        })
       }
     }, {merge: true})
   }
 
-  useEffect(() => {
-    getNewBugs()
-  }, [])
-
   return(
   <main className='bugPage'>
       {
-        openNewCard && <NewCard setOpenNewCard={setOpenNewCard} getNewBugs={getNewBugs} addNewBug={addNewBug}/>
+        openNewCard && <NewCard setOpenNewCard={setOpenNewCard} addNewBug={addNewBug} updateNewBug={updateNewBug}/>
       }
       <section className='bugPage__section'>
         <header className='bugPage__section-header'>
@@ -64,7 +61,7 @@ const BugPage = ({project}) => {
         </header>
         {
           newBugs.map((index, id) => (
-            newBug(index[id].title, '08/06/2000', index[id].postedBy, index[id].description, id)
+            newBug(index.title, '08/06/2000', index.postedBy, index.description, id)
           ))
         }
       </section>
