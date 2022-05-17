@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './newCard.css';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 
-const NewCard = ({setOpenNewCard, addNewBug, updateNewBug, user}) => {
+const NewCard = ({setOpenNewCard, addNewBug, updateBugList, user}) => {
     const [titleInput, setTitleInput] = useState("");
     const [descriptionInput, setDescriptionInput] = useState("");
 
@@ -15,7 +15,7 @@ const NewCard = ({setOpenNewCard, addNewBug, updateNewBug, user}) => {
         
         
         addNewBug(title, cardDate, user.email, desc);
-        updateNewBug()
+        updateBugList();
         setOpenNewCard(false);
     }
 
