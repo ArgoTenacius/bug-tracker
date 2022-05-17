@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './newCard.css';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 
-const NewCard = ({setOpenNewCard, addNewBug, updateNewBug}) => {
+const NewCard = ({setOpenNewCard, addNewBug, updateNewBug, user}) => {
     const [titleInput, setTitleInput] = useState("");
     const [descriptionInput, setDescriptionInput] = useState("");
 
@@ -14,7 +14,7 @@ const NewCard = ({setOpenNewCard, addNewBug, updateNewBug}) => {
         const cardDate = `${monthNow}/${dayNow}/${yearNow}`
         
         
-        addNewBug(title, cardDate, 'John Doe', desc);
+        addNewBug(title, cardDate, user.email, desc);
         updateNewBug()
         setOpenNewCard(false);
     }

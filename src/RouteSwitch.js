@@ -15,7 +15,7 @@ const RouteSwitch = ({user, setUser, projectData, setProjectData}) => {
     <Routes>
       <Route path="/login" element={<Auth setUser={setUser}/>}/>
       <Route path="/project" element={<Projects user={user} setProjectData={setProjectData}/>}/>
-      <Route path='/project/bugPage' element={<BugPage project={projectData}/>}/>
+      <Route path='/project/bugPage' element={<BugPage project={projectData} user={user}/>}/>
     </Routes>
   )
 }
