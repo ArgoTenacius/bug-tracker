@@ -1,133 +1,84 @@
 import React, { useEffect, useState } from 'react'
 import './bugPage.css'
-import { AiOutlinePlus, AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai';
-import NewCard from '../newCard/NewCard';
-import { addDoc, collection, getDocs, setDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore';
-import { db } from '../../firebase/config';
+import { AiOutlinePlus, AiFillCheckCircle } from 'react-icons/ai'
+import { MdCancel } from 'react-icons/md'
+import { arrayUnion, collection, doc, getDocs, setDoc } from 'firebase/firestore'
+import { db } from '../../firebase/config' 
 
 const BugPage = ({project, user}) => {
-  const [openNewCard, setOpenNewCard] = useState(false);
-  const [newBugs, setNewBugs] = useState(project.bugs.new);
-  const [wipBugs, setWipBugs] = useState(project.bugs.wip);
-  const projectRef = collection(db, "projects"); 
+  const [openBugs, setOpenBugs] = useState(project.bugs.open);
+  const [newBugOpen, setNewBugOpen] = useState(false);
+  const [newBugInput, setNewBugInput] = useState("");
+  const projectRef = collection(db, "projects");
 
-  const newToWip = (title, date, postedBy, desc) => {
+  const closeNewBug = () => {
+    setNewBugInput("");
+    setNewBugOpen(false);
+  }
+
+  const addNewBug = async (issue) => {
+    setNewBugOpen(false);
     const dateNow = new Date();
     const monthNow = dateNow.getMonth() + 1;
     const dayNow = dateNow.getDate();
     const yearNow = dateNow.getFullYear();
-    const cardDate = `${monthNow}/${dayNow}/${yearNow}`;
+    const cardDate = `${monthNow}/${dayNow}/${yearNow}`
 
-    addNewWip(title, date, cardDate, postedBy, user.email, desc);
-    updateBugList();
+    const openBug = {
+      posted: user.email,
+      issue: issue,
+      date: cardDate
+    }
+
+    setOpenBugs(oldArray => [...oldArray, openBug]);
+    await setDoc(doc(db, 'projects', project.id),{
+      bugs: {
+        open: arrayUnion(openBug)
+      }
+    }, {merge: true});
   }
 
-  const newBug = (title, date, user, desc, id) => (
-    <div key={id} className='bugPage__section-card'>
-      <h1>{title}</h1>
-      <div className='bugPage__section-card--date'>
-        <h6>posted: {date}</h6>
-      </div>
-      <div className='bugPage__section-card--user'>
-        <h5>By: {user}</h5>
-      </div>
-      <p>
-        {desc}
-      </p>
-      <div className='bugPage__section-card--arrow right'>
-        <AiOutlineArrowRight className='bugPage__section-card--arrow---icon' onClick={() => newToWip(title, date, user, desc)}/>
-      </div>
+  const newBugCard = () => (
+    <div className='bugPage__category-card big'>
+      <MdCancel className='bugPage__category-card--icon' onClick={() => closeNewBug()}/>
+      <input className='bugPage__category-card--input' onChange={(e) => setNewBugInput(e.target.value)}/>
+      <AiFillCheckCircle className='bugPage__category-card--icon' onClick={() => 
+        newBugInput.trim().length > 0 ? addNewBug(newBugInput) : console.log('Input empty!')
+      }/>
     </div>
   )
 
-  const newWip = (title, date, dateTake, user, userTake, desc, id) => (
-    <div key={id} className='bugPage__section-card'>
-      <h1>{title}</h1>
-      <div className='bugPage__section-card--date'>
-        <h6>posted: {date}</h6>
-        <h6>taken: {dateTake}</h6>
-      </div>
-      <div className='bugPage__section-card--user'>
-        <h5>By: {user}</h5>
-        <h5>Taken by: {userTake}</h5>
-      </div>
-      <p>
-        {desc}
-      </p>
-      <div className='bugPage__section-card--arrow right'>
-        <AiOutlineArrowLeft className='bugPage__section-card--arrow---icon' />
-        <AiOutlineArrowRight className='bugPage__section-card--arrow---icon'/>
-      </div>
-    </div>
-  )
+  useEffect(() => {
+    console.log(openBugs)
+  }, []);
 
-  const updateBugList = async () => {
-    //get the data from firebase
-    const dataProjects = await getDocs(projectRef);
-    const projects = dataProjects.docs.map((doc) => ({...doc.data(), id: doc.id}));
-
-    setNewBugs(projects[0].bugs.new);
-    setWipBugs(projects[0].bugs.wip);
-  }
-
-  const addNewBug = async (title, date, user, desc) => {
-    await setDoc(doc(db, 'projects', project.id), {
-      bugs: {
-        new: arrayUnion({
-            title: title,
-            description: desc,
-            postDate: date,
-            user: user
-        })
-      }
-    }, {merge: true})
-  }
-
-  const addNewWip = async (title, date, dateTake, user, userTake, desc) => {
-    console.log(userTake);
-    console.log(desc);
-    await setDoc(doc(db, 'projects', project.id), {
-      bugs: {
-        wip: arrayUnion({
-            title: title,
-            postDate: date,
-            takenDate: dateTake,
-            user: user,
-            description: desc
-        })
-      }
-    }, {merge: true})
-  }
-
-  return(
-  <main className='bugPage'>
-      {
-        openNewCard && <NewCard setOpenNewCard={setOpenNewCard} addNewBug={addNewBug} updateBugList={updateBugList} user={user}/>
-      }
-
-      <section className='bugPage__section'>
-        <header className='bugPage__section-header'>
-          <h1>New</h1>
-          <AiOutlinePlus className='bugPage__section-header--icon' onClick={() => setOpenNewCard(true)}/>
+  return (
+    <main className='bugPage'>
+      <section className='bugPage__category'>
+        <header className='bugPage__category-header'>
+          <h1>In progress</h1>
+          <AiOutlinePlus className='bugPage__category-header--icon' onClick={() => setNewBugOpen(true)}/>
         </header>
+
         {
-          newBugs.map((index, id) => (
-            newBug(index.title, index.postDate, index.user, index.description, id)
+          newBugOpen && newBugCard()
+        }
+
+        {
+          openBugs.map((index, id) => (
+            <div key={id} className='bugPage__category-card'>
+              <header className='bugPage__category-card--header'>
+                <h1>{index.issue}</h1>
+                <h6>{index.date}</h6>
+              </header>
+              <h4>By: {index.posted}</h4>
+            </div>
           ))
         }
+
       </section>
-  
-      <section className='bugPage__section'>
-        <header className='bugPage__section-header'>
-          <h1>Wip</h1>
-        </header>
-        {
-          wipBugs.map((index, id) => (
-            newWip(index.title, index.postDate, index.dateTaken, index.user, index.userTake, index.description, id)
-          ))
-        }
-      </section>
-  </main>
+    </main>
   )
 }
+
 export default BugPage
