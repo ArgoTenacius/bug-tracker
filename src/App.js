@@ -10,9 +10,9 @@ const App = () => {
 
   return (
     <main className='app'>
+      <Navbar />
       { onLoad ? <Load setOnLoad={setOnLoad} setUser={setUser} projectData={projectData}/> : 
       <>
-        <Navbar />
         <RouteSwitch user={user} setUser={setUser} projectData={projectData} setProjectData={setProjectData}/> 
       </>
       }

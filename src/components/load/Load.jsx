@@ -21,7 +21,11 @@ const Load = ({setUser, setOnLoad, projectData}) => {
     }, [])
     
   return (
-    <div>Load...</div>
+    <main className='load'>
+      <span className='loader'>
+
+      </span>
+    </main>
   )
 }
 
