@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './bugPage.css'
 import { AiOutlinePlus, AiFillCheckCircle } from 'react-icons/ai'
 import { MdCancel } from 'react-icons/md'
-import { arrayUnion, collection, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, collection, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
 import { db } from '../../firebase/config' 
 import { getDateNow } from '../../util/getDateNow'
 
@@ -53,20 +53,30 @@ const BugPage = ({project, user}) => {
           inProgress: arrayUnion(newBug)
         }
       }, {merge: true});
+
+      await setDoc(doc(db, 'projects', project.id), {
+        bugs: {
+          open: arrayRemove(bug)
+        }
+      }, {merge: true})
     }
     else if(list === "open") {
       console.log("adding to open")
-      await updateDoc(doc(db, 'projects', project.id),{
+      await setDoc(doc(db, 'projects', project.id),{
         bugs: {
           open: arrayUnion(newBug)
         }
       }, {merge: true});
+
+      await setDoc(doc(db, 'projects', project.id), {
+        bugs: {
+          inProgress: arrayRemove(bug)
+        }
+      }, {merge: true})
     }else{
       alert('INVALID LIST');
     }
-    
   }
-
 
   const newBugCard = () => (
     <div className='bugPage__category-card big'>
