@@ -22,7 +22,7 @@
 }
 
 .navbar__up-icon, .navbar__down-icon{
-    color: var(--app-green);
+    color: var(--app-primary);
     margin-block: 1rem;
     gap: 2rem;
     font-size: 2rem;

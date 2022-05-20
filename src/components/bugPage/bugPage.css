@@ -2,64 +2,69 @@
     width: 100%;
     min-height: 100vh;
     background-color: var(--app-bg);
-    color: var(--app-white);
     display: flex;
-    justify-content: space-between;
     padding: 1%;
+    gap: 1.5%;
 }
 
-.bugPage__section{
+.bugPage__category{
+    display: flex;
+    flex-direction: column;
+    user-select: none;
     width: 33%;
-    display: flex;
-    flex-direction: column;
-    gap: 2%;
-}
-
-.bugPage__section-header{
-    display: flex;
-    background-color: var(--app-bg-light);
-    padding-inline: 1%;
-    min-height: 2rem;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.bugPage__section-card{
-    cursor: pointer;
-    width: 100%;
-    height: fit-content;
-    padding-inline: 1%;
-    background-color: var(--app-bg-light);
-    display: flex;
-    flex-direction: column;
-}
-
-.bugPage__section-card--date, .bugPage__section-card--user{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     gap: 5%;
+    color: var(--app-white);
 }
 
-.bugPage__section-card--arrow{
+.bugPage__category-header{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
-.right {
-    justify-content: right;
-}
-
-.bugPage__section-card--arrow---icon, .bugPage__section-header--icon{
-    cursor: pointer;
+.bugPage__category-header--icon, .bugPage__category-card--icon{
     font-size: 2rem;
+    cursor: pointer;
     color: var(--app-primary);
     filter: grayscale(1);
-    opacity: 0.4;
     transition: ease-in-out 0.2s;
 }
 
-.bugPage__section-card--arrow---icon:hover, .bugPage__section-header--icon:hover{
-    opacity: 1;
+.bugPage__category-header--icon:hover, .bugPage__category-card--icon:hover{
     filter: grayscale(0);
+}
+
+.bugPage__category-header--icon:hover{
+    color: var(--app-primary);
+}
+
+.bugPage__category-card{
+    background-color: var(--app-bg-light);
+    padding: 1%;
+    border-radius: 5px;
+}
+
+.bugPage__category-card--header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.big{
+    height: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.bugPage__category-card--input{
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    font-size: 2rem;
+    border-bottom: 1px solid var(--app-white);
+    color: var(--app-white);
+}
+
+.bugPage__category-card--input:focus{
+    outline: none;
 }

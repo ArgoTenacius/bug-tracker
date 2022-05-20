@@ -2,13 +2,25 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 :root{
-    --app-bg: rgb(26, 26, 26);
-    --app-bg-light: rgb(41, 41, 41);
-    --app-green: rgba(97,255,53,0.6);
-    --app-white: rgba(255, 255, 255, 0.842);
+    /*
+    --app-bg: #121212;
+    --app-bg-light: #575267;
+    --app-green: #65dc98;
+    --app-white: #ffffffde;
+    --app-error: rgb(194, 25, 25);
+    */
+    --app-bg: #1d1d1d;
+    --app-bg-light: #333333;
+    --app-white: rgba(255, 255, 255, 0.87);
+    --app-white-m: rgba(255, 255, 255, 0.60);
+    --app-white-l: rgba(255, 255, 255, 0.38);
+    --app-primary: #FFF200;
+    --app-secondary: #B59AFB;
+    --app-alert: #FF3737;
 }
 
 .app{
