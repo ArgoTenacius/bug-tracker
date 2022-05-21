@@ -12,7 +12,6 @@
     flex-direction: column;
     user-select: none;
     width: 33%;
-    gap: 5%;
     color: var(--app-white);
 }
 
@@ -41,6 +40,7 @@
 .bugPage__category-card{
     background-color: var(--app-bg-light);
     padding: 1%;
+    margin-block: 2.5%;
     border-radius: 5px;
 }
 
@@ -50,10 +50,35 @@
     align-items: center;
 }
 
+.bugPage__category-card--arrows---icon{
+    font-size: 2rem;
+    filter: grayscale(1);
+    color: var(--app-primary);
+    cursor: pointer;
+    transition: ease-in-out 0.2s;
+}
+
+.bugPage__category-card--arrows---icon:hover{
+    filter: grayscale(0);
+}
+
+.bugPage__category-card--arrows{
+    display: flex;
+    justify-content: space-between;
+}
+
 .big{
     height: 3rem;
     display: flex;
     align-items: center;
+}
+
+.right{
+    justify-content: flex-end !important;
+}
+
+.left{
+    justify-content: flex-start !important;
 }
 
 .bugPage__category-card--input{
