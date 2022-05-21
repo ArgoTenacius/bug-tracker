@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './bugPage.css'
-import { AiOutlinePlus, AiFillCheckCircle } from 'react-icons/ai'
+import { AiOutlinePlus, AiFillCheckCircle, AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
 import { MdCancel } from 'react-icons/md'
 import { arrayRemove, arrayUnion, collection, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
 import { db } from '../../firebase/config' 
@@ -9,6 +9,7 @@ import { getDateNow } from '../../util/getDateNow'
 const BugPage = ({project, user}) => {
   const [openBugs, setOpenBugs] = useState(project.bugs.open);
   const [inProgressBugs, setInProgressBugs] = useState(project.bugs.inProgress);
+  const [doneBugs, setDoneBugs] = useState(project.bugs.done);
   const [newBugOpen, setNewBugOpen] = useState(false);
   const [newBugInput, setNewBugInput] = useState("");
 
@@ -47,7 +48,6 @@ const BugPage = ({project, user}) => {
     }
 
     if(list === "inProgress") {
-      console.log("adding to inProgress")
       await setDoc(doc(db, 'projects', project.id),{
         bugs: {
           inProgress: arrayUnion(newBug)
@@ -61,7 +61,6 @@ const BugPage = ({project, user}) => {
       }, {merge: true})
     }
     else if(list === "open") {
-      console.log("adding to open")
       await setDoc(doc(db, 'projects', project.id),{
         bugs: {
           open: arrayUnion(newBug)
@@ -73,8 +72,30 @@ const BugPage = ({project, user}) => {
           inProgress: arrayRemove(bug)
         }
       }, {merge: true})
+    }else if(list === "done"){
+      await setDoc(doc(db, 'projects', project.id), {
+        bugs: {
+          done: arrayUnion(newBug)
+        }
+      }, {merge: true})
+
+      await setDoc(doc(db, 'projects', project.id), {
+        bugs: {
+          inProgress: arrayRemove(bug)
+        }
+      }, {merge: true})
     }else{
-      alert('INVALID LIST');
+      await setDoc(doc(db, 'projects', project.id),{
+        bugs: {
+          inProgress: arrayUnion(newBug)
+        }
+      }, {merge: true});
+
+      await setDoc(doc(db, 'projects', project.id), {
+        bugs: {
+          done: arrayRemove(bug)
+        }
+      }, {merge: true})
     }
   }
 
@@ -118,19 +139,19 @@ const BugPage = ({project, user}) => {
                 <h6>{index.date}</h6>
               </header>
               <h4>By: {index.posted}</h4>
-              <AiOutlinePlus onClick={() => 
-                changeList(index, {list: openBugs, setList: setOpenBugs}, setInProgressBugs, 'inProgress')}
-              />
+              <div className='bugPage__category-card--arrows right'>
+                <AiOutlineArrowRight className='bugPage__category-card--arrows---icon' onClick={() => 
+                  changeList(index, {list: openBugs, setList: setOpenBugs}, setInProgressBugs, 'inProgress')}
+                />
+              </div>
             </div>
           ))
         }
-
       </section>
 
       <section className='bugPage__category'>
         <header className='bugPage__category-header'>
           <h1>In progress</h1>
-          <AiOutlinePlus className='bugPage__category-header--icon' onClick={() => setNewBugOpen(true)}/>
         </header>
         {
           inProgressBugs.map((index, id) => (
@@ -140,6 +161,14 @@ const BugPage = ({project, user}) => {
                 <h6>{index.date}</h6>
               </header>
               <h4>By: {index.posted}</h4>
+              <div className='bugPage__category-card--arrows'>
+                <AiOutlineArrowLeft className='bugPage__category-card--arrows---icon' onClick={() => 
+                  changeList(index, {list: inProgressBugs, setList: setInProgressBugs}, setOpenBugs, 'open')}
+                />
+                <AiOutlineArrowRight className='bugPage__category-card--arrows---icon' onClick={() => 
+                  changeList(index, {list: inProgressBugs, setList: setInProgressBugs}, setDoneBugs, 'done')}
+                />
+              </div>
             </div>
           ))
         }
@@ -148,8 +177,23 @@ const BugPage = ({project, user}) => {
       <section className='bugPage__category'>
         <header className='bugPage__category-header'>
           <h1>Done</h1>
-          <AiOutlinePlus className='bugPage__category-header--icon' onClick={() => setNewBugOpen(true)}/>
         </header>
+        {
+          doneBugs.map((index, id) => (
+            <div key={id} className='bugPage__category-card'>
+              <header className='bugPage__category-card--header'>
+                <h1>{index.issue}</h1>
+                <h6>{index.date}</h6>
+              </header>
+              <h4>By: {index.posted}</h4>
+              <div className='bugPage__category-card--arrows left'>
+                <AiOutlineArrowLeft className='bugPage__category-card--arrows---icon' onClick={() => 
+                  changeList(index, {list: doneBugs, setList: setDoneBugs}, setInProgressBugs, 'inProgressFromDone')}
+                />
+              </div>
+            </div>
+          ))
+        }
       </section>
     </main>
   )
