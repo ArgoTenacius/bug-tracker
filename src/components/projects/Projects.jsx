@@ -7,7 +7,7 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import routes from '../../constants/routes.json'
 import './projects.css';
 
-const Projects = ({user, setProjectData}) => {
+const Projects = ({user, setProjectData, setIsInProject}) => {
   const navigate = useNavigate();
   const [project, setProject] = useState([]);
   const appProjects = collection(db, "projects"); 
@@ -21,6 +21,7 @@ const Projects = ({user, setProjectData}) => {
   }
 
   const enterProject = (data) => {
+    setIsInProject(true);
     setProjectData(data);
     navigate(routes.BUGPAGE);
   }

@@ -7,13 +7,14 @@ const App = () => {
   const [user, setUser] = useState({});
   const [onLoad, setOnLoad] = useState(true);
   const [projectData, setProjectData] = useState({});
+  const [isInProject, setIsInProject] = useState(false);
 
   return (
     <main className='app'>
-      <Navbar />
+      <Navbar isInProject={isInProject}/>
       { onLoad ? <Load setOnLoad={setOnLoad} setUser={setUser} projectData={projectData}/> : 
       <>
-        <RouteSwitch user={user} setUser={setUser} projectData={projectData} setProjectData={setProjectData}/> 
+        <RouteSwitch user={user} setUser={setUser} projectData={projectData} setProjectData={setProjectData} setIsInProject={setIsInProject}/> 
       </>
       }
     </main>
