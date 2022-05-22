@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import './bugPage.css'
 import { AiOutlinePlus, AiFillCheckCircle, AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
 import { MdCancel } from 'react-icons/md'
-import { arrayRemove, arrayUnion, collection, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, doc, setDoc, getDoc } from 'firebase/firestore'
 import { db } from '../../firebase/config' 
 import { getDateNow } from '../../util/getDateNow'
 
 const BugPage = ({project, user}) => {
-  const [openBugs, setOpenBugs] = useState(project.bugs.open);
-  const [inProgressBugs, setInProgressBugs] = useState(project.bugs.inProgress);
-  const [doneBugs, setDoneBugs] = useState(project.bugs.done);
+  const [openBugs, setOpenBugs] = useState([]);
+  const [inProgressBugs, setInProgressBugs] = useState([]);
+  const [doneBugs, setDoneBugs] = useState([]);
   const [newBugOpen, setNewBugOpen] = useState(false);
   const [newBugInput, setNewBugInput] = useState("");
 
@@ -17,6 +17,20 @@ const BugPage = ({project, user}) => {
     setNewBugInput("");
     setNewBugOpen(false);
   }
+
+  const updateBugList = async () => {
+    const docRef = doc(db, 'projects', project.id);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data();
+    
+    setOpenBugs(data.bugs.open);
+    setInProgressBugs(data.bugs.inProgress);
+    setDoneBugs(data.bugs.done);
+  }
+
+  useEffect(() => {
+    updateBugList()
+  }, [])
 
   //create a new bug from scratch
   const addNewBug = async (issue) => {

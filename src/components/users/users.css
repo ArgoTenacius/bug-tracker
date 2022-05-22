@@ -36,3 +36,39 @@
     display: flex;
     justify-content: space-between;
 }
+
+.users__newCard{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 3rem;
+    padding: 1%;
+    border-radius: 5px;
+    margin-block: 0.75%;
+    background-color: var(--app-bg-light);
+}
+
+.users__newCard-icon{
+    font-size: 2rem;
+    filter: grayscale(1);
+    color: var(--app-primary);
+    cursor: pointer;
+    transition: ease-in-out 0.2s;
+}
+
+.users__newCard-icon:hover{
+    filter: grayscale(0);
+}
+
+.users__newCard-input{
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    font-size: 2rem;
+    border-bottom: 1px solid var(--app-white);
+    color: var(--app-white);
+}
+
+.users__newCard-input:focus{
+    outline: none;
+}
