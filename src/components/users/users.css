@@ -1,0 +1,38 @@
+.users{
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--app-bg);
+    color: var(--app-white);
+    padding: 1%;
+}
+
+.users__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.users__header-icon, .users__card-icon{
+    font-size: 2rem;
+    filter: grayscale(1);
+    color: var(--app-primary);
+    cursor: pointer;
+    transition: ease-in-out 0.2s;
+}
+
+.users__header-icon:hover, .users__card-icon:hover{
+    filter: grayscale(0);
+}
+
+.users__hr{
+    border: 1px solid var(--app-primary);
+}
+
+.users__card{
+    background-color: var(--app-bg-light);
+    margin-block: 0.75%;
+    padding: 1%;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+}

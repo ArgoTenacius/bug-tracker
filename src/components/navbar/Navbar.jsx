@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { FaUserAlt } from 'react-icons/fa'
-import { ImExit, ImHome } from 'react-icons/im'
+import { ImExit, ImUsers } from 'react-icons/im'
+import { AiOutlineUnorderedList, AiFillBug } from 'react-icons/ai'
 import { signOut } from 'firebase/auth'
 import { auth } from '../../firebase/config'
 import routes from '../../constants/routes.json'
@@ -11,8 +11,9 @@ const Navbar = ({isInProject, setIsInProject}) => {
   const navigate = useNavigate();
   const upSideIcons = () => (
     <>
-      <ImHome className='navbar__down-icon' onClick={goHome}/>
-      <FaUserAlt className='navbar__up-icon'/>
+      <AiOutlineUnorderedList className='navbar__down-icon' onClick={goHome}/>
+      <AiFillBug className='navbar__up-icon' onClick={() => navigate(routes.BUGPAGE)} />
+      <ImUsers className='navbar__up-icon' onClick={() => navigate(routes.USERS)}/>
     </>
   )
 
@@ -25,6 +26,7 @@ const Navbar = ({isInProject, setIsInProject}) => {
     setIsInProject(false);
     navigate(routes.PROJECT);
   }
+
   return (
     <main className='navbar'>
         <div className='navbar__up'>

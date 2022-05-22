@@ -1,5 +1,6 @@
 {
     "LOGIN": "/login",
     "PROJECT": "/project",
-    "BUGPAGE": "/project/bugPage"
+    "BUGPAGE": "/project/bugPage",
+    "USERS": "project/users"
 }
