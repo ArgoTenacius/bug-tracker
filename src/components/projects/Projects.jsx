@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../firebase/config';
-import { addDoc, arrayUnion, collection, getDocs } from 'firebase/firestore'
+import { addDoc, arrayRemove, arrayUnion, collection, getDocs, setDoc, doc } from 'firebase/firestore'
 import { useNavigate } from 'react-router';
 import { ImExit } from 'react-icons/im'
 import { AiOutlinePlus, AiFillCheckCircle } from 'react-icons/ai'
@@ -57,6 +57,14 @@ const Projects = ({user, setProjectData, setIsInProject}) => {
     </div>
   )
 
+  const removeProject = async (id) => {
+    await setDoc(doc(db, 'projects', id), {
+      users: arrayRemove(user.email)
+    }, {merge: true})
+
+    renderProjects()
+  }
+
   useEffect(() => {
     renderProjects();
   }, [])
@@ -64,7 +72,7 @@ const Projects = ({user, setProjectData, setIsInProject}) => {
   const projectCard = (name, key, project) => (
     <section key={key} className='project__card'>
         <h1 className='project__card-name' onClick={() => enterProject(project)}>{name}</h1>
-        <ImExit className='project__card-icon'/>
+        <ImExit className='project__card-icon' onClick={() => removeProject(project.id)}/>
     </section>
   )
 
