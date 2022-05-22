@@ -11,7 +11,7 @@ const App = () => {
 
   return (
     <main className='app'>
-      <Navbar isInProject={isInProject}/>
+      <Navbar isInProject={isInProject} setIsInProject={setIsInProject}/>
       { onLoad ? <Load setOnLoad={setOnLoad} setUser={setUser} projectData={projectData}/> : 
       <>
         <RouteSwitch user={user} setUser={setUser} projectData={projectData} setProjectData={setProjectData} setIsInProject={setIsInProject}/> 
