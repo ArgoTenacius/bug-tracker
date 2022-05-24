@@ -93,3 +93,21 @@
 .bugPage__category-card--input:focus{
     outline: none;
 }
+
+.bugPage__category-card--middle{
+    display: flex;
+    justify-content: space-between;
+}
+
+.bugPage__category-card--middle---icon{
+    font-size: 1rem;
+    margin-right: 4px;
+    filter: grayscale(1);
+    color: var(--app-primary);
+    cursor: pointer;
+    transition: ease-in-out 0.2s;
+}
+
+.bugPage__category-card--middle---icon:hover{
+    filter: grayscale(0);
+}

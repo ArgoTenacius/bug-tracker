@@ -23,6 +23,9 @@
     width: 100%;
     height: 3rem;
     background-color: var(--app-bg-light);
+    padding: 1%;
+    margin-block: 20px;
+    border-radius: 5px;
 }
 
 .project__newCard-icon{
@@ -54,6 +57,7 @@
     align-items: center;
     justify-content: space-between;
     transition: ease-in-out 0.2s;
+    border-radius: 5px;
 }
 
 .project__card h1{

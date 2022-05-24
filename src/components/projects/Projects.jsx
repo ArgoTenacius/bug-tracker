@@ -51,9 +51,9 @@ const Projects = ({user, setProjectData, setIsInProject}) => {
 
   const newProjectCard = () => (
     <div className='project__newCard'>
-      <MdCancel className='project__newCard-icon' onClick={() => closeNewProject()}/>
+      <MdCancel className='project__header-icon' onClick={() => closeNewProject()}/>
       <input maxLength={30} className='project__newCard-input' onChange={(e) => setNewProjectInput(e.target.value)}/>
-      <AiFillCheckCircle className='project__newCard-icon' onClick={() => createNewProject(newProjectInput) }/>
+      <AiFillCheckCircle className='project__header-icon' onClick={() => createNewProject(newProjectInput) }/>
     </div>
   )
 
